@@ -17,8 +17,21 @@ def index():
 def login():
     usr = request.form["username"]
     pwd = request.form["password"]
-    # TODO: check username and password
-    session["username"] = usr
+    
+    sql = "SELECT password FROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":usr})
+    user = result.fetchone()
+
+    if user == None:
+        return render_template("youshallnotpass.html")
+    else:
+        hash_value = user[0]
+
+    if check_password_hash(hash_value, pwd):
+        session["username"] = usr
+    else:
+        return render_template("youshallnotpass.html")
+
     return redirect("/")
 
 @app.route("/signup")
