@@ -1,18 +1,10 @@
-from flask import Flask
+from app import app
 from flask import redirect, render_template, request, session
-# from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import check_password_hash, generate_password_hash
-from os import getenv
+# from werkzeug.security import check_password_hash, generate_password_hash
 
-app = Flask(__name__)
-app.secret_key = getenv("SECRET_KEY")
-# app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
-# db = SQLAlchemy(app)
+# from db import db
 
-import routes
-
-"""
-from db import db
+import users
 
 @app.route("/")
 def index():
@@ -23,6 +15,7 @@ def login():
     usr = request.form["username"]
     pwd = request.form["password"]
     
+    """
     sql = "SELECT password FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":usr})
     user = result.fetchone()
@@ -31,8 +24,9 @@ def login():
         return render_template("youshallnotpass.html")
     else:
         hash_value = user[0]
+    """
 
-    if check_password_hash(hash_value, pwd):
+    if users.confirm_login(usr, pwd):
         session["username"] = usr
     else:
         return render_template("youshallnotpass.html")
@@ -48,11 +42,15 @@ def createaccount():
     username = request.form["username"]
     password = request.form["password"]
 
+    users.create(username, password)
+
+    """
     hash_value = generate_password_hash(password)
 
     sql = "INSERT INTO users (username,password,role) VALUES (:username,:password,'user')"
     db.session.execute(sql, {"username":username,"password":hash_value})
     db.session.commit()
+    """
 
     session["username"] = username
 
@@ -66,4 +64,3 @@ def cancel():
 def logout():
     del session["username"]
     return redirect("/")
-"""
