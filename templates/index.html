@@ -1,6 +1,14 @@
 {% if session.username %}
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
-<a href="/logout">Kirjaudu ulos</a>
+<p><a href="/logout">Kirjaudu ulos</a></p>
+
+<hr>
+
+<p>{% for subst in substances %}
+<a href="/view/{{ subst[0] }}">{{ subst[1] }}</a> <br>
+</p>
+{% endfor %}
+
 {% else %}
 
 <p><h2>Kirjaudu sisään</h2></p>

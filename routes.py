@@ -2,29 +2,22 @@ from app import app
 from flask import redirect, render_template, request, session
 # from werkzeug.security import check_password_hash, generate_password_hash
 
-# from db import db
+from db import db
 
 import users
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    sql = "SELECT id, name FROM substances ORDER BY id ASC"
+    result = db.session.execute(sql)
+    substances = result.fetchall()
+
+    return render_template("index.html", substances=substances)
 
 @app.route("/login",methods=["POST"])
 def login():
     usr = request.form["username"]
     pwd = request.form["password"]
-    
-    """
-    sql = "SELECT password FROM users WHERE username=:username"
-    result = db.session.execute(sql, {"username":usr})
-    user = result.fetchone()
-
-    if user == None:
-        return render_template("youshallnotpass.html")
-    else:
-        hash_value = user[0]
-    """
 
     if users.confirm_login(usr, pwd):
         session["username"] = usr
@@ -44,17 +37,24 @@ def createaccount():
 
     users.create(username, password)
 
-    """
-    hash_value = generate_password_hash(password)
-
-    sql = "INSERT INTO users (username,password,role) VALUES (:username,:password,'user')"
-    db.session.execute(sql, {"username":username,"password":hash_value})
-    db.session.commit()
-    """
-
     session["username"] = username
 
     return redirect("/")
+
+@app.route("/view/<int:id>")
+def view(id):
+    sql = "SELECT * FROM substances WHERE id=:id"
+    result = db.session.execute(sql, {"id":id})
+    substance = result.fetchone()
+
+    name = substance[1]
+    target = substance[2]
+    mechanism = substance[3]
+    metabolism = substance[4]
+    eff_duration = substance[5]
+    notes = substance[6]
+
+    return render_template("view.html", name=name, target=target, mechanism=mechanism, metabolism=metabolism, eff_duration=eff_duration, notes=notes)
 
 @app.route("/cancel")
 def cancel():
