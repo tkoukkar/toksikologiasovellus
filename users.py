@@ -19,9 +19,16 @@ def confirm_login(usr, pwd):
     
     return False
 
-def create(username, password):
+def get_role(usr):
+    sql = "SELECT role FROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":usr})
+    user = result.fetchone()
+
+    return user[0]
+
+def create(username, password, role):
     hash_value = generate_password_hash(password)
 
-    sql = "INSERT INTO users (username,password,role) VALUES (:username,:password,'user')"
-    db.session.execute(sql, {"username":username,"password":hash_value})
+    sql = "INSERT INTO users (username,password,role) VALUES (:username,:password,:role)"
+    db.session.execute(sql, {"username":username,"password":hash_value,"role":role})
     db.session.commit()

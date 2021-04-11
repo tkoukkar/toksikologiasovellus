@@ -1,0 +1,10 @@
+<form action="/addinteraction" method="POST">
+
+<p>{% for subst in substances %}
+<input type="checkbox" name="substance" value={{ subst[0] }}>{{ subst[1] }}<br>
+{% endfor %}</p>
+
+<p>Kuvaus:<br>
+<input type="text" name="description"></p>
+
+<p><input type="submit" value="Lisää yhteisvaikutus"></p>

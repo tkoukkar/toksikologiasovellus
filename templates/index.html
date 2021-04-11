@@ -1,5 +1,5 @@
 {% if session.username %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<p>Olet kirjautunut: {{ session.username }}, {{ session.userrole }}</p>
 <p><a href="/logout">Kirjaudu ulos</a></p>
 
 <hr>
@@ -8,6 +8,14 @@
 <a href="/view/{{ subst[0] }}">{{ subst[1] }}</a> <br>
 </p>
 {% endfor %}
+
+{% if session.userrole == "admin" %}
+
+<hr>
+<p><a href="/newsubst">Lisää uusi aine</a></p>
+<p><a href="/newia">Lisää yhteisvaikutus</a></p>
+
+{% endif %}
 
 {% else %}
 

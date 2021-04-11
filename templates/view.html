@@ -1,9 +1,24 @@
-<p><h1>{{ name }}</h1></p>
+<p><h1>{{ substance[1] }}</h1></p>
 
-<p><b>Vaikutuskohde:</b> {{ target }} </p>
-<p><b>Vaikutusmekanismi:</b> {{ mechanism }} </p>
-<p><b>Metabolia:</b> {{ metabolism }} </p>
-<p><b>Vaikutusaika:</b> {{ eff_duration }} </p>
-<p><b>Muuta:</b> {{ notes }} </p>
+<p><b>Vaikutuskohde:</b> {{ substance[2] }} </p>
+<p><b>Vaikutusmekanismi:</b> {{ substance[3] }} </p>
+<p><b>Metabolia:</b> {{ substance[4] }} </p>
+<p><b>Vaikutusaika:</b> {{ substance[5] }} </p>
+<p><b>Muuta:</b> {{ substance[6] }} </p>
+{% if substance[7] %}
+<p><b>Mahdolliset haittavaikutukset:</b> {{ substance[7] }}</p>
+{% endif %}
+
+{% if interactions %}
+<hr>
+<p><h2>Yhteisvaikutukset:</h2></p>
+
+<p>{% for interaction in interactions %}
+<p><b>{{ interaction[1] }}:</b></p>
+<p>{{ interaction[2] }}</p>
+<hr>
+{% endfor %}</p>
+
+{% endif %}
 
 <p><a href="/cancel">Takaisin</a></p>
