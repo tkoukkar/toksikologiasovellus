@@ -1,11 +1,10 @@
 from app import app
 from flask import redirect, render_template, request, session
-# from werkzeug.security import check_password_hash, generate_password_hash
-
 from db import db
 
-import substances
 import users
+import substs
+import intacs
 
 @app.route("/")
 def index():
@@ -47,8 +46,8 @@ def createaccount():
 
 @app.route("/view/<int:id>")
 def view(id):
-    substance = substances.get(id)
-    interactions = substances.list_interactions(id)
+    substance = substs.get(id)
+    interactions = intacs.getlist(id)
     """
     sql = "SELECT * FROM substances WHERE id=:id"
     result = db.session.execute(sql, {"id":id})
@@ -75,7 +74,7 @@ def addsubstance():
     notes = request.form["notes"]
     risks = request.form["risks"]
 
-    substances.add(name, target, mechanism, metabolism, eff_duration, notes, risks)
+    substs.add(name, target, mechanism, metabolism, eff_duration, notes, risks)
 
     return redirect("/")
 
@@ -84,6 +83,7 @@ def newia():
     sql = "SELECT id, name FROM substances ORDER BY id ASC"
     result = db.session.execute(sql)
     substances = result.fetchall()
+
     return render_template("newia.html", substances=substances)
 
 @app.route("/addinteraction", methods=["POST"])
@@ -91,9 +91,9 @@ def addinteraction():
     combination = request.form.getlist("substance")
     description = request.form["description"]
 
-    print(combination)
+    # print(combination)
 
-    substances.addinteraction(combination, description)
+    intacs.add(combination, description)
 
     return redirect("/")
 
