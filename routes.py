@@ -8,9 +8,12 @@ import intacs
 
 @app.route("/")
 def index():
+    """
     sql = "SELECT id, name FROM substances ORDER BY id ASC"
     result = db.session.execute(sql)
     substances = result.fetchall()
+    """
+    substances = substs.getall()
 
     return render_template("index.html", substances=substances)
 
@@ -47,25 +50,20 @@ def createaccount():
 @app.route("/view/<int:id>")
 def view(id):
     substance = substs.get(id)
+    substclass = substs.getclass(id)
     interactions = intacs.getlist(id)
-    """
-    sql = "SELECT * FROM substances WHERE id=:id"
-    result = db.session.execute(sql, {"id":id})
-    substance = result.fetchone()
 
-    sql = "SELECT * FROM substances, interactions, substanceInteraction WHERE substanceInteraction.substance_id = :id AND substanceInteraction.interaction_id = interactions.id"
-    result = db.session.execute(sql, {"id":id})
-    substance = result.fetchall()
-    """
-
-    return render_template("view.html", substance=substance, interactions=interactions)
+    return render_template("view.html", substance=substance, substclass=substclass, interactions=interactions)
 
 @app.route("/newsubst")
 def newsubst():
-    return render_template("newsubst.html")
+    classes = substs.classlist()
+
+    return render_template("newsubst.html", classes=classes)
 
 @app.route("/addsubstance", methods=["POST"])
 def addsubstance():
+    class_id = request.form["class"]
     name = request.form["name"]
     target = request.form["target"]
     mechanism = request.form["mechanism"]
@@ -74,15 +72,40 @@ def addsubstance():
     notes = request.form["notes"]
     risks = request.form["risks"]
 
-    substs.add(name, target, mechanism, metabolism, eff_duration, notes, risks)
+    substs.add(class_id, name, target, mechanism, metabolism, eff_duration, notes, risks)
+
+    return redirect("/")
+
+@app.route("/editsubst/<int:id>")
+def editsubst(id):
+    substance = substs.get(id)
+    classes = substs.classlist()
+
+    return render_template("editsubst.html", substance=substance, classes=classes)
+
+@app.route("/update/<int:id>", methods=["POST"])
+def update(id):
+    class_id = request.form["class"]
+    name = request.form["name"]
+    target = request.form["target"]
+    mechanism = request.form["mechanism"]
+    metabolism = request.form["metabolism"]
+    eff_duration = request.form["eff_duration"]
+    notes = request.form["notes"]
+    risks = request.form["risks"]
+
+    substs.update(id, class_id, name, target, mechanism, metabolism, eff_duration, notes, risks)
 
     return redirect("/")
 
 @app.route("/newia")
 def newia():
+    """
     sql = "SELECT id, name FROM substances ORDER BY id ASC"
     result = db.session.execute(sql)
     substances = result.fetchall()
+    """
+    substances = substs.getall()
 
     return render_template("newia.html", substances=substances)
 

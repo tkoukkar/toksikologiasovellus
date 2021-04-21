@@ -1,5 +1,6 @@
 <p><h1>{{ substance[2] }}</h1></p>
 
+<p><b>Luokka:</b> {{ substclass }} </p>
 <p><b>Vaikutuskohde:</b> {{ substance[3] }} </p>
 <p><b>Vaikutusmekanismi:</b> {{ substance[4] }} </p>
 <p><b>Metabolia:</b> {{ substance[5] }} </p>
@@ -18,6 +19,13 @@
 <p>{{ interaction[2] }}</p>
 <hr>
 {% endfor %}</p>
+
+{% endif %}
+
+{% if session.userrole == "admin" %}
+
+<hr>
+<p><a href="/editsubst/{{ substance[0] }}">Muokkaa aineen tietoja</a></p>
 
 {% endif %}
 
