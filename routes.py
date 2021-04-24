@@ -50,11 +50,13 @@ def createaccount():
 @app.route("/view/<int:id>")
 def view(id):
     substance = substs.get(id)
-    substclass = substs.getclass(id)
-    moa = substs.getmoa(id)
+    substclass = substs.cls(id)
+    indication = substs.ind(id)
+    mechanism = substs.moa(id)
+
     interactions = intacs.getlist(id)
 
-    return render_template("view.html", substance=substance, substclass=substclass, moa = moa, interactions=interactions)
+    return render_template("view.html", substance=substance, substclass=substclass, indication=indication, mechanism=mechanism, interactions=interactions)
 
 @app.route("/newsubst")
 def newsubst():
@@ -114,8 +116,6 @@ def newia():
 def addinteraction():
     combination = request.form.getlist("substance")
     description = request.form["description"]
-
-    # print(combination)
 
     intacs.add(combination, description)
 

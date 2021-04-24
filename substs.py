@@ -8,19 +8,26 @@ def get(id):
 
     return substance
 
-def getclass(id):
+def cls(id):
     sql = "SELECT classes.name FROM substances, classes WHERE substances.id=:id AND classes.id=substances.class_id"
     result = db.session.execute(sql, {"id":id})
     classname = result.fetchone()
 
     return classname
 
-def getmoa(id):
+def moa(id):
     sql = "SELECT moas.target, moas.effect FROM substances, moas, substanceMoa WHERE substanceMoa.substance_id = :id AND substanceMoa.moa_id = moas.id"
     result = db.session.execute(sql, {"id":id})
-    moa = result.fetchone()
+    mechanism = result.fetchone()
 
-    return moa
+    return mechanism
+
+def ind(id):
+    sql = "SELECT indications.name, substanceIndication.route, substanceIndication.notes FROM substances, indications, substanceIndication WHERE substanceIndication.substance_id = :id AND substanceIndication.indication_id = indications.id"
+    result = db.session.execute(sql, {"id":id})
+    indication = result.fetchone()
+
+    return indication
 
 def getall():
     sql = "SELECT id, name FROM substances ORDER BY id ASC"
