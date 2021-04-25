@@ -1,5 +1,21 @@
 # Toksikologiasovellus
 
+### Välipalautus 3
+
+**Sovelluksen nykyinen tilanne**:
+
+[Alkuperäisen suunnitelman](https://github.com/tkoukkar/toksikologiasovellus/#v%C3%A4lipalautus-1) mukaiset ominaisuudet on pääpiirteissään toteutettu. Hakutoiminto tosin on toteutettu vasta aineen nimen perusteella, minkä lisäksi aineen tietonäkymässä näkyy tällä hetkellä vain yksi indikaatio ja yksi vaikutusmekanismi, vaikka molempia on mahdollista lisätä useampia kutakin ainetta kohden. Ulkoasua ei myöskään ole hiottu, eikä Herokun tietokantaan ole valmiiksi syötetty kaikkia olennaisia tietoja.
+
+**Sovellus Herokussa**
+
+Sovellus sijaitsee osoitteessa https://toksikologiasovellus.herokuapp.com/.
+
+Keskeisimmät muutokset sovelluksen käytössä [edelliseen palautukseen](https://github.com/tkoukkar/toksikologiasovellus/blob/main/README.md#v%C3%A4lipalautus-2) verrattuna:
+
+* Aloitusnäkymään on lisätty hakutyökalu. Kun käyttäjä syöttää aineen nimen ja painaa nappia _Hae_, sovellus etsii tietokannasta syötettyä nimeä vastaavan aineen ja näyttää sen tietonäkymään johtavan linkin.
+* Uuden aineen luontinäkymä on jaettu kahteen osaan siten, että ensimmäisessä vaiheessa syötetään lisättävän aineen perustiedot, minkä jälkeen painamalla nappia _Seuraava_ siirrytään toiseen näkymään, jossa valitaan aineen indikaatiot sekä vaikutusmekanismit. Uuden aineen tallentaminen onnistuu painamalla jälkimmäisessä näkymässä nappia _Tallenna_.
+* Kun käyttäjä on kirjautunut ylläpitäjänä, aineen tietonäkymässä näkyy linkit _Muokkaa aineen tietoja_ sekä _Poista aine_. Näistä ensin mainittu vie aineen muokkausnäkymään, joka toimii samoin kuin luontinäkymä, paitsi että aiemmin syötetyt tiedot näkyvät valmiina (mikä ei kuitenkaan estä niiden muokkaamista). Linkki _Poista aine_ poistaa aineen, jolloin se ei enää näy aloitusnäkymän listauksessa eikä sitä löydä haulla.
+
 ### Välipalautus 2
 
 **Sovelluksen nykyinen tilanne**:
