@@ -1,0 +1,9 @@
+<form action="/addmoa/{{ subst_id }}" method="POST">
+
+<p><h2>Lisää aineen vaikutuskohteet ja -tavat:</h2></p>
+
+{% for mechanism in moas %}
+<input type="checkbox" name="moa" value={{ mechanism[0] }}>{{ mechanism[1] }}, {{ mechanism[2] }}<br>
+{% endfor %}
+
+<input type="submit" value="Tallenna">

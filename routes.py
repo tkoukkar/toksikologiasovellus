@@ -68,16 +68,18 @@ def newsubst():
 def addsubstance():
     class_id = request.form["class"]
     name = request.form["name"]
-    target = request.form["target"]
-    mechanism = request.form["mechanism"]
+    # target = request.form["target"]
+    # effect = request.form["effect"]
     metabolism = request.form["metabolism"]
     eff_duration = request.form["eff_duration"]
     notes = request.form["notes"]
     risks = request.form["risks"]
 
-    substs.add(class_id, name, target, mechanism, metabolism, eff_duration, notes, risks)
+    subst_id = substs.add(class_id, name, metabolism, eff_duration, notes, risks)
 
-    return redirect("/")
+    moas = substs.classmoas(class_id)
+
+    return render_template("editp2.html", subst_id=subst_id, moas=moas)
 
 @app.route("/editsubst/<int:id>")
 def editsubst(id):
@@ -90,16 +92,38 @@ def editsubst(id):
 def update(id):
     class_id = request.form["class"]
     name = request.form["name"]
-    target = request.form["target"]
-    mechanism = request.form["mechanism"]
+    # target = request.form["target"]
+    # mechanism = request.form["mechanism"]
     metabolism = request.form["metabolism"]
     eff_duration = request.form["eff_duration"]
     notes = request.form["notes"]
     risks = request.form["risks"]
 
-    substs.update(id, class_id, name, target, mechanism, metabolism, eff_duration, notes, risks)
+    substs.update(id, class_id, name, metabolism, eff_duration, notes, risks)
+
+    moas = substs.classmoas(class_id)
+
+    return render_template("editp2.html", subst_id=id, moas=moas)
+
+@app.route("/addmoa/<int:subst_id>", methods=["POST"])
+def addmoa(subst_id):
+    # moa = request.form["moa"]
+
+    moa = request.form.getlist("moa")
+
+    substs.add_moa(subst_id, moa)
 
     return redirect("/")
+
+"""
+@app.route("/setmoa/<int:subst_id>", methods=["POST"])
+def setmoa(subst_id):
+    moa = request.form["moa"]
+
+    substs.set_moa(subst_id, moa)
+
+    return redirect("/")
+"""
 
 @app.route("/newia")
 def newia():

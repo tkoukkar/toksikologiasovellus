@@ -1,27 +1,30 @@
 <form action="/update/{{ substance[0] }}" method="POST">
+
 <p><h2>Muokkaa aineen tietoja</h2></p>
+
 <p>Aineen nimi:<br>
 <input type="text" name="name" value="{{ substance[2] }}"></p>
+
 <p>Luokka:<br>
 <select name="class">
     {% for class in classes %}
     <option value="{{ class[0] }}">{{ class[1] }}</option>
     {% endfor %}
 </select></p>
-<p>Kohde:<br>
-<input type="text" name="target" value="{{ substance[3] }}"></p>
-<p>Vaikutusmekanismi:<br>
-<input type="text" name="mechanism" value="{{ substance[4] }}"></p>
+
 <p>Metabolia:<br>
 <input type="text" name="metabolism" value="{{ substance[5] }}"></p>
+
 <p>Vaikutusaika:<br>
 <input type="text" name="eff_duration" value="{{ substance[6] }}"></p>
+
 <p>Muuta:<br>
 <input type="text" name="notes" value="{{ substance[7] }}"></p>
+
 <p>Haittavaikutukset:<br>
 <input type="text" name="risks" value="{{ substance[8] }}"></p>
 
-<input type="submit" value="Tallenna">
+<input type="submit" value="Seuraava">
 
 <p><a href="/cancel">Peruuta</a></p>
 </form>
