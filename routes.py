@@ -8,11 +8,6 @@ import intacs
 
 @app.route("/")
 def index():
-    """
-    sql = "SELECT id, name FROM substances ORDER BY id ASC"
-    result = db.session.execute(sql)
-    substances = result.fetchall()
-    """
     substances = substs.getall()
 
     return render_template("index.html", substances=substances)
@@ -61,6 +56,7 @@ def view(id):
 @app.route("/newsubst")
 def newsubst():
     classes = substs.classlist()
+    indications = substs.indlist()
 
     return render_template("newsubst.html", classes=classes)
 
@@ -78,8 +74,9 @@ def addsubstance():
     subst_id = substs.add(class_id, name, metabolism, eff_duration, notes, risks)
 
     moas = substs.classmoas(class_id)
+    indications = substs.indlist()
 
-    return render_template("editp2.html", subst_id=subst_id, moas=moas)
+    return render_template("editp2.html", subst_id=subst_id, moas=moas, indications=indications)
 
 @app.route("/editsubst/<int:id>")
 def editsubst(id):
@@ -102,36 +99,22 @@ def update(id):
     substs.update(id, class_id, name, metabolism, eff_duration, notes, risks)
 
     moas = substs.classmoas(class_id)
+    indications = substs.indlist()
 
-    return render_template("editp2.html", subst_id=id, moas=moas)
+    return render_template("editp2.html", subst_id=id, moas=moas, indications=indications)
 
-@app.route("/addmoa/<int:subst_id>", methods=["POST"])
-def addmoa(subst_id):
-    # moa = request.form["moa"]
-
+@app.route("/editlinks/<int:subst_id>", methods=["POST"])
+def editlinks(subst_id):
     moa = request.form.getlist("moa")
+    indications = request.form.getlist("indication")
 
     substs.add_moa(subst_id, moa)
+    substs.add_indications(subst_id, indications)
 
     return redirect("/")
-
-"""
-@app.route("/setmoa/<int:subst_id>", methods=["POST"])
-def setmoa(subst_id):
-    moa = request.form["moa"]
-
-    substs.set_moa(subst_id, moa)
-
-    return redirect("/")
-"""
 
 @app.route("/newia")
 def newia():
-    """
-    sql = "SELECT id, name FROM substances ORDER BY id ASC"
-    result = db.session.execute(sql)
-    substances = result.fetchall()
-    """
     substances = substs.getall()
 
     return render_template("newia.html", substances=substances)

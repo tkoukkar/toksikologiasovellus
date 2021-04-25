@@ -45,16 +45,23 @@ def add(class_id, name, metabolism, eff_duration, notes, risks):
 
     return id
 
+def update(id, class_id, name, metabolism, eff_duration, notes, risks):
+    sql = "UPDATE substances SET class_id=:class_id, name=:name, metabolism=:metabolism, eff_duration=:eff_duration, notes=:notes, risks=:risks WHERE id=:id"
+    db.session.execute(sql, {"class_id":class_id, "name":name, "metabolism":metabolism, "eff_duration":eff_duration, "notes":notes, "risks":risks, "id":id})
+    db.session.commit()
+
+
 def add_moa(substance_id, moalist):
     for moa_id in moalist:
         sql = "INSERT INTO substanceMoa (substance_id, moa_id) VALUES (:substance_id, :moa_id)"
         db.session.execute(sql, {"substance_id":substance_id, "moa_id":moa_id})
         db.session.commit()
 
-def update(id, class_id, name, metabolism, eff_duration, notes, risks):
-    sql = "UPDATE substances SET class_id=:class_id, name=:name, metabolism=:metabolism, eff_duration=:eff_duration, notes=:notes, risks=:risks WHERE id=:id"
-    db.session.execute(sql, {"class_id":class_id, "name":name, "metabolism":metabolism, "eff_duration":eff_duration, "notes":notes, "risks":risks, "id":id})
-    db.session.commit()
+def add_indications(substance_id, indications):
+    for indication_id in indications:
+        sql = "INSERT INTO substanceIndication (substance_id, indication_id) VALUES (:substance_id, :indication_id)"
+        db.session.execute(sql, {"substance_id":substance_id, "indication_id":indication_id})
+        db.session.commit()
 
 """
 def set_moa(substance_id, moa_id):
@@ -76,3 +83,10 @@ def classmoas(class_id):
     moas = result.fetchall()
 
     return moas
+
+def indlist():
+    sql = "SELECT id, name FROM indications ORDER BY type ASC"
+    result = db.session.execute(sql)
+    indications = result.fetchall()
+
+    return indications
