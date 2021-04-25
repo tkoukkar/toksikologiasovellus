@@ -1,0 +1,8 @@
+<h2>Haun tulokset:</h2>
+
+<p>{% for subst in substances %}
+<a href="/view/{{ subst[0] }}">{{ subst[1] }}</a> <br>
+</p>
+{% endfor %}
+
+<p><a href="/cancel">Takaisin</a></p>

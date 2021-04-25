@@ -42,6 +42,14 @@ def createaccount():
 
     return redirect("/")
 
+@app.route("/search", methods=["POST"])
+def search():
+    srchstring = request.form["srchstring"]
+
+    substances = substs.search(srchstring)
+
+    return render_template("srchres.html", substances=substances)
+
 @app.route("/view/<int:id>")
 def view(id):
     substance = substs.get(id)

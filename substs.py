@@ -15,6 +15,16 @@ def getall():
 
     return allsubsts
 
+def search(name):
+    print(name)
+    sql = "SELECT id, name FROM substances WHERE name=:name ORDER BY id ASC"
+    result = db.session.execute(sql, {"name":name})
+    srchres = result.fetchall()
+
+    print(srchres)
+
+    return srchres
+
 def cls(id):
     sql = "SELECT classes.name FROM substances, classes WHERE substances.id=:id AND classes.id=substances.class_id"
     result = db.session.execute(sql, {"id":id})

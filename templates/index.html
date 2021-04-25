@@ -4,6 +4,13 @@
 
 <hr>
 
+<form action="/search" method="POST">
+<input type="text" name="srchstring">
+<input type="submit" value="Hae"></p>
+</form>
+
+<hr>
+
 <p>{% for subst in substances %}
 <a href="/view/{{ subst[0] }}">{{ subst[1] }}</a> <br>
 </p>
