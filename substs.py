@@ -9,19 +9,16 @@ def get(id):
     return substance
 
 def getall():
-    sql = "SELECT id, name FROM substances ORDER BY id ASC"
+    sql = "SELECT id, name FROM substances WHERE visible=TRUE ORDER BY id ASC"
     result = db.session.execute(sql)
     allsubsts = result.fetchall()
 
     return allsubsts
 
 def search(name):
-    print(name)
-    sql = "SELECT id, name FROM substances WHERE name=:name ORDER BY id ASC"
+    sql = "SELECT id, name FROM substances WHERE name=:name AND visible=TRUE"
     result = db.session.execute(sql, {"name":name})
     srchres = result.fetchall()
-
-    print(srchres)
 
     return srchres
 
@@ -47,7 +44,7 @@ def ind(id):
     return indication
 
 def add(class_id, name, metabolism, eff_duration, notes, risks):
-    sql = "INSERT INTO substances(class_id, name, metabolism, eff_duration, notes, risks) VALUES (:class_id, :name, :metabolism, :eff_duration, :notes, :risks) RETURNING id"
+    sql = "INSERT INTO substances(class_id, name, metabolism, eff_duration, notes, risks, visible) VALUES (:class_id, :name, :metabolism, :eff_duration, :notes, :risks, TRUE) RETURNING id"
     result = db.session.execute(sql, {"class_id":class_id, "name":name, "metabolism":metabolism, "eff_duration":eff_duration, "notes":notes, "risks":risks})
     id = result.fetchone()[0]
 
@@ -73,12 +70,10 @@ def add_indications(substance_id, indications):
         db.session.execute(sql, {"substance_id":substance_id, "indication_id":indication_id})
         db.session.commit()
 
-"""
-def set_moa(substance_id, moa_id):
-    sql = "UPDATE substanceMoa SET moa_id=:moa_id WHERE substance_id=:substance_id"
-    db.session.execute(sql, {"moa_id":moa_id, "substance_id":substance_id})
+def delete(id):
+    sql = "UPDATE substances SET visible=FALSE WHERE id = :id"
+    db.session.execute(sql, {"id":id})
     db.session.commit()
-"""
 
 def classlist():
     sql = "SELECT id, name FROM classes ORDER BY id ASC"

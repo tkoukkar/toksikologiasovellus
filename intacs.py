@@ -27,12 +27,6 @@ def add(combination, description):
     interaction_id = result.fetchone()[0]
 
     for substance_id in combination:
-        """
-        sid = "SELECT id FROM substances WHERE name=:substance"
-        res = db.session.execute(sid, {"name":substance})
-        substance_id = res.fetchone()[0]
-        """
-
         link = "INSERT INTO substanceInteraction(substance_id, interaction_id) VALUES (:substance_id, :interaction_id)"
         db.session.execute(link, {"substance_id":substance_id, "interaction_id":interaction_id})
 

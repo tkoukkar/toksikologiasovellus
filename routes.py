@@ -111,13 +111,19 @@ def update(id):
 
     return render_template("editp2.html", subst_id=id, moas=moas, indications=indications)
 
-@app.route("/editlinks/<int:subst_id>", methods=["POST"])
-def editlinks(subst_id):
+@app.route("/editlts/<int:subst_id>", methods=["POST"])
+def editlts(subst_id):
     moa = request.form.getlist("moa")
     indications = request.form.getlist("indication")
 
     substs.add_moa(subst_id, moa)
     substs.add_indications(subst_id, indications)
+
+    return redirect("/")
+
+@app.route("/delete/<int:id>")
+def delete(id):
+    substs.delete(id)
 
     return redirect("/")
 
