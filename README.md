@@ -1,5 +1,16 @@
 # Toksikologiasovellus
 
+### Välipalautus 3
+
+**Sovelluksen nykyinen tilanne**:
+
+Alkuperäisen suunnitelman[https://github.com/tkoukkar/toksikologiasovellus/#v%C3%A4lipalautus-1] mukaiset ominaisuudet on pääpiirteissään toteutettu. Hakutoiminto tosin on toteutettu vasta aineen nimen perusteella, minkä lisäksi aineen tietonäkymässä näkyy tällä hetkellä vain yksi indikaatio ja yksi vaikutusmekanismi, vaikka molempia on mahdollista lisätä useampia kutakin ainetta kohden. Ulkoasua ei myöskään ole hiottu.
+
+**Sovellus Herokussa**
+
+Sovellus sijaitsee osoitteessa https://toksikologiasovellus.herokuapp.com/.
+
+
 ### Välipalautus 2
 
 **Sovelluksen nykyinen tilanne**:
