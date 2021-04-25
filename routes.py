@@ -8,12 +8,18 @@ import intacs
 
 @app.route("/")
 def index():
+    """
+    Aloitusnäkymä
+    """
     substances = substs.getall()
 
     return render_template("index.html", substances=substances)
 
-@app.route("/login",methods=["POST"])
+@app.route("/login", methods=["POST"])
 def login():
+    """
+    Käsittelee sisäänkirjautumisen. Jos tunnus ja salasana ovat oikein, kirjaa käyttäjän sisään; muutoin näyttää virheilmoituksen.
+    """
     usr = request.form["username"]
     pwd = request.form["password"]
 
@@ -27,10 +33,16 @@ def login():
 
 @app.route("/signup")
 def signup():
+    """
+    Siirtyy uuden käyttäjän luontinäkymään.
+    """
     return render_template("signup.html")
 
 @app.route("/createaccount", methods=["POST"])
 def createaccount():
+    """
+    Luo uuden käyttäjän kutsumalla users-moduulin funktiota create, kirjaa tämän sisään ja palaa aloitusnäkymään.
+    """
     username = request.form["username"]
     password = request.form["password"]
     role = request.form["role"]
@@ -44,6 +56,9 @@ def createaccount():
 
 @app.route("/search", methods=["POST"])
 def search():
+    """
+    Kutsuu aineen hakufunktiota ja siirtyy haun tulokset -näkymään.
+    """
     srchstring = request.form["srchstring"]
 
     substances = substs.search(srchstring)
@@ -52,6 +67,9 @@ def search():
 
 @app.route("/view/<int:id>")
 def view(id):
+    """
+    Siirtyy aineen tietonäkymään.
+    """
     substance = substs.get(id)
     substclass = substs.cls(id)
     indication = substs.ind(id)
@@ -63,6 +81,9 @@ def view(id):
 
 @app.route("/newsubst")
 def newsubst():
+    """
+    Siirtyy aineen luontinäkymään.
+    """
     classes = substs.classlist()
     indications = substs.indlist()
 
@@ -70,6 +91,9 @@ def newsubst():
 
 @app.route("/addsubstance", methods=["POST"])
 def addsubstance():
+    """
+    Käsittelee aineen luonnin ensimmäisen vaiheen ja siirtyy indikaatioiden ja vaikutusmekanismien muokkausnäkymään.
+    """
     class_id = request.form["class"]
     name = request.form["name"]
     # target = request.form["target"]
@@ -88,6 +112,9 @@ def addsubstance():
 
 @app.route("/editsubst/<int:id>")
 def editsubst(id):
+    """
+    Siirtyy aineen muokkausnäkymään.
+    """
     substance = substs.get(id)
     classes = substs.classlist()
 
@@ -95,6 +122,9 @@ def editsubst(id):
 
 @app.route("/update/<int:id>", methods=["POST"])
 def update(id):
+    """
+    Käsittelee aineen tietojen muokkaamisen ensimmäisen vaiheen ja siirtyy indikaatioiden ja vaikutusmekanismien muokkausnäkymään.
+    """
     class_id = request.form["class"]
     name = request.form["name"]
     # target = request.form["target"]
@@ -113,6 +143,9 @@ def update(id):
 
 @app.route("/editlts/<int:subst_id>", methods=["POST"])
 def editlts(subst_id):
+    """
+    Käsittelee aineen luonnin tai muokkaamisen toisen vaiheen ja palaa aloitusnäkymään.
+    """
     moa = request.form.getlist("moa")
     indications = request.form.getlist("indication")
 
@@ -129,12 +162,18 @@ def delete(id):
 
 @app.route("/newia")
 def newia():
+    """
+    Siirtyy yhteisvaikutusten muokkausnäkymään.
+    """
     substances = substs.getall()
 
     return render_template("newia.html", substances=substances)
 
 @app.route("/addinteraction", methods=["POST"])
 def addinteraction():
+    """
+    Käsittelee yhteisvaikutusten lisäämisen ja palaa aloitusnäkymään.
+    """
     combination = request.form.getlist("substance")
     description = request.form["description"]
 
@@ -144,9 +183,15 @@ def addinteraction():
 
 @app.route("/cancel")
 def cancel():
+    """
+    Palaa aloitusnäkymään.
+    """
     return redirect("/")
 
 @app.route("/logout")
 def logout():
+    """
+    Kirjaa käyttäjän ulos ja palaa aloitusnäkymään.
+    """
     del session["username"]
     return redirect("/")
