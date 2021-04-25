@@ -87,6 +87,11 @@ def classmoas(class_id):
     result = db.session.execute(sql, {"class_id":class_id})
     moas = result.fetchall()
 
+    if not moas:
+        sql_n = "SELECT id, target, effect FROM moas ORDER BY id ASC"
+        result_n = db.session.execute(sql_n)
+        moas = result_n.fetchall()
+
     return moas
 
 def indlist():
