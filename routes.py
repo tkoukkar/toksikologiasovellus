@@ -60,10 +60,15 @@ def search():
     Kutsuu aineen hakufunktiota ja siirtyy haun tulokset -näkymään.
     """
     srchstring = request.form["srchstring"]
+    srchres = []
 
-    substances = substs.search(srchstring)
+    substances = substs.getall()
 
-    return render_template("srchres.html", substances=substances)
+    for substance in substances:
+        if srchstring in substance[1]:
+            srchres.append(substance)
+
+    return render_template("srchres.html", substances=srchres)
 
 @app.route("/view/<int:id>")
 def view(id):
@@ -71,6 +76,10 @@ def view(id):
     Siirtyy aineen tietonäkymään.
     """
     substance = substs.get(id)
+
+    if not substance:
+        return render_template("notfound.html")
+
     substclass = substs.cls(id)
     indication = substs.ind(id)
     mechanism = substs.moa(id)

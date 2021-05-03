@@ -5,7 +5,7 @@ def get(id):
     """
     Hakee parametrina saatua tunnistetta vastaavan aineen tiedot tietokannasta.
     """
-    sql = "SELECT * FROM substances WHERE id=:id"
+    sql = "SELECT * FROM substances WHERE id=:id AND visible=TRUE"
     result = db.session.execute(sql, {"id":id})
     substance = result.fetchone()
 
