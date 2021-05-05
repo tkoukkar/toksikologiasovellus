@@ -6,14 +6,27 @@ def getlist(substance_id):
     Hakee tietokannasta parametrina saatua tunnistetta vastaavaan aineeseen liittyvät yhteisvaikutukset.
     """
     ialist = []
+    ids = []
 
     sql = "SELECT interactions.id, interactions.description FROM substances, interactions, substanceInteraction WHERE substanceInteraction.substance_id = :substance_id AND substanceInteraction.interaction_id = interactions.id"
     result = db.session.execute(sql, {"substance_id":substance_id})
-    interaction = result.fetchone()
+    interactions = result.fetchall()
 
-    if interaction:
-       cmb = get_combination(interaction[0])
-       ialist.append((interaction[0], cmb, interaction[1]))
+    if not interactions:
+        return []
+
+    for interaction in interactions:
+        if not interaction[0] in ids:
+            cmb = get_combination(interaction[0])
+
+            cmbstring = ""
+
+            for substance in cmb:
+                cmbstring += (substance.name)
+                cmbstring += ", "
+
+            ialist.append((interaction[0], cmbstring[:len(cmbstring) - 2], interaction[1]))
+            ids.append(interaction[0])
 
     return ialist
 

@@ -39,7 +39,7 @@ def cls(id):
     result = db.session.execute(sql, {"id":id})
     classname = result.fetchone()
 
-    return classname
+    return classname.name
 
 def moa(id):
     """
