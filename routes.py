@@ -81,12 +81,12 @@ def view(id):
         return render_template("notfound.html")
 
     substclass = substs.cls(id)
-    indication = substs.ind(id)
-    mechanism = substs.moa(id)
+    indications = substs.ind(id)
+    mechanisms = substs.moa(id)
 
     interactions = intacs.getlist(id)
 
-    return render_template("view.html", substance=substance, substclass=substclass, indication=indication, mechanism=mechanism, interactions=interactions)
+    return render_template("view.html", substance=substance, substclass=substclass, indications=indications, mechanisms=mechanisms, interactions=interactions)
 
 @app.route("/newsubst")
 def newsubst():

@@ -45,25 +45,41 @@ def moa(id):
     """
     Hakee parametrina saatua tunnistetta vastaavan aineen vaikutusmekanismin tietokannasta.
     """
-    sql = "SELECT moas.target, moas.effect FROM substances, moas, substanceMoa WHERE substanceMoa.substance_id = :id AND substanceMoa.moa_id = moas.id"
+    sql = "SELECT moas.id, moas.target, moas.effect FROM substances, moas, substanceMoa WHERE substanceMoa.substance_id = :id AND substanceMoa.moa_id = moas.id"
     result = db.session.execute(sql, {"id":id})
-    mechanism = result.fetchone()
+    rows = result.fetchall()
 
-    return mechanism
+    ids = []
+    mechanisms = []
+
+    for mechanism in rows:
+        if not mechanism[0] in ids:
+            mechanisms.append([mechanism[1], mechanism[2]])
+            ids.append(mechanism[0])
+
+    return mechanisms
 
 def ind(id):
     """
-    Hakee parametrina saatua tunnistetta vastaavan aineen käyttötarkoituksen tietokannasta.
+    Hakee parametrina saatua tunnistetta vastaavan aineen käyttötarkoitukset tietokannasta.
     """
     sql = "SELECT indications.name, substanceIndication.route, substanceIndication.notes FROM substances, indications, substanceIndication WHERE substanceIndication.substance_id = :id AND substanceIndication.indication_id = indications.id"
     result = db.session.execute(sql, {"id":id})
-    indication = result.fetchone()
+    rows = result.fetchall()
 
-    return indication
+    indications = []
+    names = []
+
+    for indication in rows:
+        if not indication[0] in names:
+            indications.append(indication)
+            names.append(indication[0])
+
+    return indications
 
 def add(class_id, name, metabolism, eff_duration, notes, risks):
     """
-    Lisää tietokantaan parametreina saadut uuden aineen tiedot.
+    Lisää tietokantaan parametreina saadut uuden aineen tiedot
     """
     sql = "INSERT INTO substances(class_id, name, metabolism, eff_duration, notes, risks, visible) VALUES (:class_id, :name, :metabolism, :eff_duration, :notes, :risks, TRUE) RETURNING id"
     result = db.session.execute(sql, {"class_id":class_id, "name":name, "metabolism":metabolism, "eff_duration":eff_duration, "notes":notes, "risks":risks})
@@ -80,7 +96,6 @@ def update(id, class_id, name, metabolism, eff_duration, notes, risks):
     sql = "UPDATE substances SET class_id=:class_id, name=:name, metabolism=:metabolism, eff_duration=:eff_duration, notes=:notes, risks=:risks WHERE id=:id"
     db.session.execute(sql, {"class_id":class_id, "name":name, "metabolism":metabolism, "eff_duration":eff_duration, "notes":notes, "risks":risks, "id":id})
     db.session.commit()
-
 
 def add_moa(substance_id, moalist):
     """
