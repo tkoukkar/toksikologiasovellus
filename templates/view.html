@@ -9,7 +9,7 @@
 
 <p><b>Vaikutuskohde ja -tapa:</b>
 {% for mechanism in mechanisms %}
-{{ mechanism[0] }} – {{ mechanism[1] }}{% if not loop.last %}; {% endif %}
+{{ mechanism[1] }} – {{ mechanism[2] }}{% if not loop.last %}; {% endif %}
 {% endfor %}</p>
 
 <p><b>Metabolia:</b> {{ substance[3] }} </p>

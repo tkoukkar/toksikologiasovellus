@@ -8,12 +8,8 @@
 
 <p><h2>Vaikutuskohteet ja -tavat:</h2></p>
 
-<p>{% for mechanism in classmoas %}
-    {% if mechanism[0] in moaids %}
-        <input type="checkbox" name="moa" value={{ mechanism[0] }} checked>{{ mechanism[1] }}, {{ mechanism[2] }}<br>
-    {% else %}
-        <input type="checkbox" name="moa" value={{ mechanism[0] }}>{{ mechanism[1] }}, {{ mechanism[2] }}<br>
-    {% endif %}
+<p>{% for mechanism in moas %}
+<input type="checkbox" name="moa" value={{ mechanism[0] }}>{{ mechanism[1] }}, {{ mechanism[2] }}<br>
 {% endfor %}</p>
 
 <input type="submit" value="Tallenna">

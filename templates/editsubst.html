@@ -5,24 +5,28 @@
 <p>Aineen nimi:<br>
 <input type="text" name="name" value="{{ substance[2] }}"></p>
 
-<p>Luokka:<br>
-<select name="class">
+<p>Luokka:</p>
+<p><select name="class">
     {% for class in classes %}
-    <option value="{{ class[0] }}">{{ class[1] }}</option>
+        {% if class[1] == substclass %}
+        <option value="{{ class[0] }}" selected="selected">{{ class[1] }}</option>
+        {% else %}
+        <option value="{{ class[0] }}">{{ class[1] }}</option>
+        {% endif %}
     {% endfor %}
 </select></p>
 
 <p>Metabolia:<br>
-<input type="text" name="metabolism" value="{{ substance[5] }}"></p>
+<input type="text" name="metabolism" value="{{ substance[3] }}"></p>
 
 <p>Vaikutusaika:<br>
-<input type="text" name="eff_duration" value="{{ substance[6] }}"></p>
+<input type="text" name="eff_duration" value="{{ substance[4] }}"></p>
 
 <p>Muuta:<br>
-<input type="text" name="notes" value="{{ substance[7] }}"></p>
+<input type="text" name="notes" value="{{ substance[5] }}"></p>
 
 <p>Haittavaikutukset:<br>
-<input type="text" name="risks" value="{{ substance[8] }}"></p>
+<input type="text" name="risks" value="{{ substance[6] }}"></p>
 
 <input type="submit" value="Seuraava">
 

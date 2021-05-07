@@ -82,7 +82,7 @@ def view(id):
 
     substclass = substs.cls(id)
     indications = substs.ind(id)
-    mechanisms = substs.moa(id)
+    mechanisms = substs.moas(id)
 
     interactions = intacs.getlist(id)
 
@@ -105,8 +105,6 @@ def addsubstance():
     """
     class_id = request.form["class"]
     name = request.form["name"]
-    # target = request.form["target"]
-    # effect = request.form["effect"]
     metabolism = request.form["metabolism"]
     eff_duration = request.form["eff_duration"]
     notes = request.form["notes"]
@@ -117,7 +115,7 @@ def addsubstance():
     moas = substs.classmoas(class_id)
     indications = substs.indlist()
 
-    return render_template("editp2.html", subst_id=subst_id, moas=moas, indications=indications)
+    return render_template("createp2.html", subst_id=subst_id, moas=moas, indications=indications)
 
 @app.route("/editsubst/<int:id>")
 def editsubst(id):
@@ -125,9 +123,10 @@ def editsubst(id):
     Siirtyy aineen muokkausnäkymään.
     """
     substance = substs.get(id)
+    substclass = substs.cls(id)
     classes = substs.classlist()
 
-    return render_template("editsubst.html", substance=substance, classes=classes)
+    return render_template("editsubst.html", substance=substance, substclass=substclass, classes=classes)
 
 @app.route("/update/<int:id>", methods=["POST"])
 def update(id):
@@ -136,8 +135,6 @@ def update(id):
     """
     class_id = request.form["class"]
     name = request.form["name"]
-    # target = request.form["target"]
-    # mechanism = request.form["mechanism"]
     metabolism = request.form["metabolism"]
     eff_duration = request.form["eff_duration"]
     notes = request.form["notes"]
@@ -145,10 +142,16 @@ def update(id):
 
     substs.update(id, class_id, name, metabolism, eff_duration, notes, risks)
 
-    moas = substs.classmoas(class_id)
+    classmoas = substs.classmoas(class_id)
     indications = substs.indlist()
 
-    return render_template("editp2.html", subst_id=id, moas=moas, indications=indications)
+    substmoas = substs.moas(id)
+    moaids = []
+
+    for moa in substmoas:
+        moaids.append(moa[0])
+
+    return render_template("editp2.html", subst_id=id, classmoas=classmoas, indications=indications, moaids = moaids)
 
 @app.route("/editlts/<int:subst_id>", methods=["POST"])
 def editlts(subst_id):

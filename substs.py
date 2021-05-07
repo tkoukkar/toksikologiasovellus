@@ -41,7 +41,7 @@ def cls(id):
 
     return classname.name
 
-def moa(id):
+def moas(id):
     """
     Hakee parametrina saatua tunnistetta vastaavan aineen vaikutusmekanismin tietokannasta.
     """
@@ -54,7 +54,7 @@ def moa(id):
 
     for mechanism in rows:
         if not mechanism[0] in ids:
-            mechanisms.append([mechanism[1], mechanism[2]])
+            mechanisms.append([mechanism[0], mechanism[1], mechanism[2]])
             ids.append(mechanism[0])
 
     return mechanisms
