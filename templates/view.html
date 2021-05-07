@@ -12,12 +12,12 @@
 {{ mechanism[0] }} – {{ mechanism[1] }}{% if not loop.last %}; {% endif %}
 {% endfor %}</p>
 
-<p><b>Metabolia:</b> {{ substance[5] }} </p>
+<p><b>Metabolia:</b> {{ substance[3] }} </p>
 
-<p><b>Vaikutusaika:</b> {{ substance[6] }} </p>
+<p><b>Vaikutusaika:</b> {{ substance[4] }} </p>
 
-<p><b>Muuta:</b> {{ substance[7] }} </p>
-{% if substance[8] %}
+<p><b>Muuta:</b> {{ substance[5] }} </p>
+{% if substance[6] %}
 
 <p><b>Mahdolliset haittavaikutukset:</b> {{ substance[8] }}</p>
 {% endif %}
