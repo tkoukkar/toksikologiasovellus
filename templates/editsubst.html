@@ -1,9 +1,13 @@
 <form action="/update/{{ substance[0] }}" method="POST">
 
-<p><h2>Muokkaa aineen tietoja</h2></p>
+<p><h2>{% if new %}
+Lisää uusi aine
+{% else %}
+Muokkaa aineen tietoja
+{% endif %}</h2></p>
 
 <p>Aineen nimi:<br>
-<input type="text" name="name" value="{{ substance[2] }}"></p>
+<input type="text" name="name" value="{{ substance[2] }}" required></p>
 
 <p>Luokka:</p>
 <p><select name="class">
@@ -28,7 +32,12 @@
 <p>Haittavaikutukset:<br>
 <input type="text" name="risks" value="{{ substance[6] }}"></p>
 
+<input type="hidden" name="new" value={{ new }}>
 <input type="submit" value="Seuraava">
 
-<p><a href="/cancel">Peruuta</a></p>
+<p>{% if new %}
+<a href="/uncreate/{{ substance[0] }}">Peruuta</a>
+{% else %}
+<a href="/cancel">Peruuta</a>
+{% endif %}</p>
 </form>

@@ -63,17 +63,17 @@ def ind(id):
     """
     Hakee parametrina saatua tunnistetta vastaavan aineen käyttötarkoitukset tietokannasta.
     """
-    sql = "SELECT indications.name, substanceIndication.route, substanceIndication.notes FROM substances, indications, substanceIndication WHERE substanceIndication.substance_id = :id AND substanceIndication.indication_id = indications.id"
+    sql = "SELECT indications.id, indications.name, substanceIndication.route, substanceIndication.notes FROM substances, indications, substanceIndication WHERE substanceIndication.substance_id = :id AND substanceIndication.indication_id = indications.id"
     result = db.session.execute(sql, {"id":id})
     rows = result.fetchall()
 
     indications = []
-    names = []
+    ids = []
 
     for indication in rows:
-        if not indication[0] in names:
+        if not indication[0] in ids:
             indications.append(indication)
-            names.append(indication[0])
+            ids.append(indication[0])
 
     return indications
 
@@ -120,6 +120,14 @@ def delete(id):
     Merkitsee aineen tietokannassa poistetuksi, jolloin se ei enää näy aloitusnäkymässä eikä haun tuloksissa.
     """
     sql = "UPDATE substances SET visible=FALSE WHERE id = :id"
+    db.session.execute(sql, {"id":id})
+    db.session.commit()
+
+def uncreate(id):
+    """
+    Poistaa aineen lopullisesti tietokannasta.
+    """
+    sql = "DELETE FROM substances WHERE id = :id"
     db.session.execute(sql, {"id":id})
     db.session.commit()
 

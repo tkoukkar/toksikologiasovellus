@@ -1,3 +1,5 @@
+from distutils.util import strtobool
+
 from app import app
 from flask import redirect, render_template, request, session
 from db import db
@@ -117,6 +119,17 @@ def addsubstance():
 
     return render_template("createp2.html", subst_id=subst_id, moas=moas, indications=indications)
 
+@app.route("/editnew/<int:id>")
+def editnew(id):
+    """
+    Siirtyy aineen muokkausnäkymään.
+    """
+    substance = substs.get(id)
+    substclass = substs.cls(id)
+    classes = substs.classlist()
+
+    return render_template("editsubst.html", substance=substance, substclass=substclass, classes=classes, new=True)
+
 @app.route("/editsubst/<int:id>")
 def editsubst(id):
     """
@@ -126,12 +139,14 @@ def editsubst(id):
     substclass = substs.cls(id)
     classes = substs.classlist()
 
-    return render_template("editsubst.html", substance=substance, substclass=substclass, classes=classes)
+    return render_template("editsubst.html", substance=substance, substclass=substclass, classes=classes, new=False)
 
 @app.route("/update/<int:id>", methods=["POST"])
 def update(id):
     """
     Käsittelee aineen tietojen muokkaamisen ensimmäisen vaiheen ja siirtyy indikaatioiden ja vaikutusmekanismien muokkausnäkymään.
+    Jos kyseessä on uusi aine (tieto lomakkeelta, tallennetaan muuttujaan creating), käytetään sivua createp2.html, jolle ei syötetä aineen aiempia tietoja.
+    Muussa tapauksessa haetaan tiedot aineelle aiemmin syötetyistä indikaatioista ja vaikutusmekanismeista ja siirrytään sivulle editp2.html.
     """
     class_id = request.form["class"]
     name = request.form["name"]
@@ -139,19 +154,28 @@ def update(id):
     eff_duration = request.form["eff_duration"]
     notes = request.form["notes"]
     risks = request.form["risks"]
+    creating = strtobool(request.form["new"])
 
     substs.update(id, class_id, name, metabolism, eff_duration, notes, risks)
 
     classmoas = substs.classmoas(class_id)
-    indications = substs.indlist()
+    allind = substs.indlist()
+
+    if creating:
+        return render_template("createp2.html", subst_id=id, moas=classmoas, indications=allind)
 
     substmoas = substs.moas(id)
+    substind = substs.ind(id)
     moaids = []
+    indids = []
 
     for moa in substmoas:
         moaids.append(moa[0])
 
-    return render_template("editp2.html", subst_id=id, classmoas=classmoas, indications=indications, moaids = moaids)
+    for ind in substind:
+        indids.append(ind[0])
+
+    return render_template("editp2.html", subst_id=id, classmoas=classmoas, indications=allind, moaids=moaids, indids=indids)
 
 @app.route("/editlts/<int:subst_id>", methods=["POST"])
 def editlts(subst_id):
@@ -169,6 +193,12 @@ def editlts(subst_id):
 @app.route("/delete/<int:id>")
 def delete(id):
     substs.delete(id)
+
+    return redirect("/")
+
+@app.route("/uncreate/<int:id>")
+def uncreate(id):
+    substs.uncreate(id)
 
     return redirect("/")
 

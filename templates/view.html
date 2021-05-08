@@ -4,7 +4,7 @@
 
 <p><b>Indikaatiot:</b>
 {% for indication in indications %} 
-{{ indication[0] }}{% if not loop.last %}, {% endif %}
+{{ indication[1] }}{% if not loop.last %}, {% endif %}
 {% endfor %}</p>
 
 <p><b>Vaikutuskohde ja -tapa:</b>

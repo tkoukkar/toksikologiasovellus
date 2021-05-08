@@ -3,7 +3,11 @@
 <p><h2>Indikaatiot:</h2></p>
 
 <p>{% for indication in indications %}
-<input type="checkbox" name="indication" value={{ indication[0] }}>{{ indication[1] }}<br>
+    {% if indication[0] in indids %}
+        <input type="checkbox" name="indication" value={{ indication[0] }} checked>{{ indication[1] }}<br>
+    {% else %}
+        <input type="checkbox" name="indication" value={{ indication[0] }}>{{ indication[1] }}<br>
+    {% endif %}
 {% endfor %}</p>
 
 <p><h2>Vaikutuskohteet ja -tavat:</h2></p>
@@ -15,5 +19,7 @@
         <input type="checkbox" name="moa" value={{ mechanism[0] }}>{{ mechanism[1] }}, {{ mechanism[2] }}<br>
     {% endif %}
 {% endfor %}</p>
+
+<p><a href="/editsubst/{{ subst_id }}">Edellinen</a></p>
 
 <input type="submit" value="Tallenna">
