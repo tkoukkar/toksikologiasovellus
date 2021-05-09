@@ -30,7 +30,7 @@ def login():
         session["username"] = usr
         session["userrole"] = users.get_role(usr)
     else:
-        return render_template("youshallnotpass.html")
+        return render_template("error.html", message="Virheellinen käyttäjätunnus tai salasana.")
 
     return redirect("/")
 
@@ -48,12 +48,37 @@ def createaccount():
     """
     username = request.form["username"]
     password = request.form["password"]
+
+    if users.exists(username):
+        return render_template("error.html", message="Antamasi nimi on jo käytössä.")
+
     role = request.form["role"]
 
     users.create(username, password, role)
 
     session["username"] = username
     session["userrole"] = role
+
+    return redirect("/")
+
+@app.route("/userlist")
+def userlist():
+    """
+    Siirtyy käyttäjälistaan.
+    """
+    usrl = users.getall()
+
+    return render_template("userlist.html", userlist=usrl)
+
+@app.route("/makeadmin/<int:id>")
+def makeadmin(id):
+    users.make_admin(id)
+
+    return redirect("/")
+
+@app.route("/deleteaccount/<int:id>")
+def deleteaccount(id):
+    users.delete(id)
 
     return redirect("/")
 
@@ -95,7 +120,7 @@ def view(id):
     substance = substs.get(id)
 
     if not substance:
-        return render_template("notfound.html")
+        return render_template("error.html", message="Sivua ei löydy.")
 
     substclass = substs.cls(id)
     indications = substs.ind(id)

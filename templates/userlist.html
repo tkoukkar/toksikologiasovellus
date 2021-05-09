@@ -1,0 +1,11 @@
+<p>{% for user in userlist %}
+{% if user[3] == "admin" %}
+{{ user[1] }}, ylläpitäjä<br>
+{% else %}
+{{ user[1] }}, käyttäjä | <a href="/makeadmin/{{ user[0] }}">Muuta ylläpitäjäksi</a> | <a href="/deleteaccount/{{ user[0] }}">Poista</a><br>
+{% endif %}
+</p>
+{% endfor %}
+
+<hr>
+<p><a href="/cancel">Takaisin</a></p>
