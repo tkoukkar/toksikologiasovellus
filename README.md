@@ -2,7 +2,7 @@
 
 ### Lopullinen versio
 
-Sovellus sijaitsee osoitteessa https://toksikologiasovellus.herokuapp.com/.
+Sovellus sijaitsee osoitteessa https://toksikologiasovellus.herokuapp.com/. Ylläpitäjän oikeudet saa käyttöönsä kirjautumalla nimellä *admintest*, salasana 4dm1n.
 
 * Aloitusnäkymä:
     * Jos käyttäjä ei ole kirjautunut sisään, aloitusnäkymässä näkyy kentät käyttäjätunnukselle ja salasanalle sekä *Kirjaudu sisään* -nappi. Mikäli käyttäjä on aiemmin luonut itselleen käyttäjätilin, hän voi kirjautua sisään syöttämällä käyttäjätunnuksensa ja salasanansa niille varattuihin kenttiin sekä klikkaamlla tämän jälkeen *Kirjaudu sisään* -nappia.
