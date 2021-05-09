@@ -12,8 +12,6 @@ CREATE TABLE substances(
 id SERIAL PRIMARY KEY,
 class_id INTEGER,
 name TEXT,
-target TEXT,
-mechanism TEXT,
 metabolism TEXT,
 eff_duration TEXT,
 notes TEXT,

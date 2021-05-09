@@ -52,12 +52,10 @@ def createaccount():
     if users.exists(username):
         return render_template("error.html", message="Antamasi nimi on jo käytössä.")
 
-    role = request.form["role"]
-
-    users.create(username, password, role)
+    users.create(username, password)
 
     session["username"] = username
-    session["userrole"] = role
+    session["userrole"] = "user"
 
     return redirect("/")
 

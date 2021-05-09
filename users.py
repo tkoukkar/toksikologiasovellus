@@ -35,11 +35,11 @@ def get_role(usr):
 
     return user[0]
 
-def create(username, password, role):
+def create(username, password):
     hash_value = generate_password_hash(password)
 
-    sql = "INSERT INTO users (username,password,role) VALUES (:username,:password,:role)"
-    db.session.execute(sql, {"username":username,"password":hash_value,"role":role})
+    sql = "INSERT INTO users (username,password,role) VALUES (:username,:password,'user')"
+    db.session.execute(sql, {"username":username,"password":hash_value})
     db.session.commit()
 
 def exists(username):
