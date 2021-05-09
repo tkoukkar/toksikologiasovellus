@@ -1,0 +1,39 @@
+<form action="/advsearch" method="POST">
+
+<p><h2>Haku</h2></p>
+
+<p>Aineen nimi:<br>
+<input type="text" name="name"></p>
+
+<p>Luokka:<br>
+<select name="class">
+    <option value=0>mikä tahansa
+    {% for class in classes %}
+    <option value={{ class[0] }}>{{ class[1] }}</option>
+    {% endfor %}
+</select></p>
+
+<p>Metabolia:<br>
+<input type="text" name="metabolism"></p>
+
+<p>Indikaatio:<br>
+<select name="indication">
+    <option value=0>mikä tahansa
+    {% for indication in indications %}
+    <option value={{ indication[0] }}>{{ indication[1] }}</option>
+    {% endfor %}
+</select></p>
+
+<p>Vaikutuskohde ja -tapa:<br>
+<select name="moa">
+    <option value=0>mikä tahansa
+    {% for mechanism in moas %}
+    <option value={{ mechanism[0] }}>{{ mechanism[1] }}, {{ mechanism[2] }}</option>
+    {% endfor %}
+</select></p>
+
+<input type="submit" value="Hae">
+
+<p><a href="/cancel">Peruuta</a></p>
+
+</form>

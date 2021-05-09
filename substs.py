@@ -21,16 +21,6 @@ def getall():
 
     return allsubsts
 
-def search(name):
-    """
-    Hakee parametrina saatua nimeä vastaavien aineiden tunnisteet ja nimet tietokannasta.
-    """
-    sql = "SELECT id, name FROM substances WHERE name=:name AND visible=TRUE"
-    result = db.session.execute(sql, {"name":name})
-    srchres = result.fetchall()
-
-    return srchres
-
 def cls(id):
     """
     Hakee parametrina saatua tunnistetta vastaavan aineen luokan nimen tietokannasta.
@@ -135,7 +125,7 @@ def classlist():
     """
     Palauttaa listan tietokantaan syötetyistä aineluokista.
     """
-    sql = "SELECT id, name FROM classes ORDER BY id ASC"
+    sql = "SELECT id, name FROM classes ORDER BY id DESC"
     result = db.session.execute(sql)
     classlist = result.fetchall()
 

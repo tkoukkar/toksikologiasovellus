@@ -3,7 +3,7 @@
 <p><h2>Indikaatiot:</h2></p>
 
 <p>{% for indication in indications %}
-    {% if indication[0] in indids %}
+    {% if indication[0] in ind_ids %}
         <input type="checkbox" name="indication" value={{ indication[0] }} checked>{{ indication[1] }}<br>
     {% else %}
         <input type="checkbox" name="indication" value={{ indication[0] }}>{{ indication[1] }}<br>
@@ -13,7 +13,7 @@
 <p><h2>Vaikutuskohteet ja -tavat:</h2></p>
 
 <p>{% for mechanism in classmoas %}
-    {% if mechanism[0] in moaids %}
+    {% if mechanism[0] in moa_ids %}
         <input type="checkbox" name="moa" value={{ mechanism[0] }} checked>{{ mechanism[1] }}, {{ mechanism[2] }}<br>
     {% else %}
         <input type="checkbox" name="moa" value={{ mechanism[0] }}>{{ mechanism[1] }}, {{ mechanism[2] }}<br>

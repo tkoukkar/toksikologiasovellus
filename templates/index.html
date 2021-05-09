@@ -9,10 +9,12 @@
 <input type="submit" value="Hae"></p>
 </form>
 
+<p><a href="/openadvsrch">Tarkennettu haku</a></p>
+
 <hr>
 
 <p>{% for subst in substances %}
-<a href="/view/{{ subst[0] }}">{{ subst[1] }}</a> <br>
+<a href="/view/{{ subst[0] }}">{{ subst[1] }}</a><br>
 </p>
 {% endfor %}
 

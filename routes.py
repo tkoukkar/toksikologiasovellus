@@ -7,6 +7,7 @@ from db import db
 import users
 import substs
 import intacs
+import srch
 
 @app.route("/")
 def index():
@@ -59,18 +60,32 @@ def createaccount():
 @app.route("/search", methods=["POST"])
 def search():
     """
-    Kutsuu aineen hakufunktiota ja siirtyy haun tulokset -näkymään.
+    Kutsuu srch-moduulin nimen perusteella -hakufunktiota, jolle annetaan parametrina käyttäjän syöttämä aineen nimi tai sen osa, ja siirtyy haun tulokset -näkymään.
     """
     srchstring = request.form["srchstring"]
-    srchres = []
-
-    substances = substs.getall()
-
-    for substance in substances:
-        if srchstring in substance[1]:
-            srchres.append(substance)
+    srchres = srch.by_name(srchstring)
 
     return render_template("srchres.html", substances=srchres)
+
+@app.route("/advsearch", methods=["POST"])
+def advsearch():
+    class_id = request.form["class"]
+    name = request.form["name"]
+    metabolism = request.form["metabolism"]
+    ind_id = request.form["indication"]
+    moa_id = request.form["moa"]
+    
+    srchres = srch.adv(int(class_id), name, metabolism, int(ind_id), int(moa_id))
+
+    return render_template("srchres.html", substances=srchres)
+
+@app.route("/openadvsrch")
+def openadvsrch():
+    classes = substs.classlist()
+    moas = substs.classmoas(1)
+    indications = substs.indlist()
+
+    return render_template("advsrch.html", classes=classes, moas=moas, indications=indications)
 
 @app.route("/view/<int:id>")
 def view(id):
@@ -96,12 +111,11 @@ def newsubst():
     Siirtyy aineen luontinäkymään.
     """
     classes = substs.classlist()
-    indications = substs.indlist()
 
     return render_template("newsubst.html", classes=classes)
 
-@app.route("/addsubstance", methods=["POST"])
-def addsubstance():
+@app.route("/addsubst", methods=["POST"])
+def addsubst():
     """
     Käsittelee aineen luonnin ensimmäisen vaiheen ja siirtyy indikaatioiden ja vaikutusmekanismien muokkausnäkymään.
     """
@@ -166,16 +180,16 @@ def update(id):
 
     substmoas = substs.moas(id)
     substind = substs.ind(id)
-    moaids = []
-    indids = []
+    moa_ids = []
+    ind_ids = []
 
     for moa in substmoas:
-        moaids.append(moa[0])
+        moa_ids.append(moa[0])
 
     for ind in substind:
-        indids.append(ind[0])
+        ind_ids.append(ind[0])
 
-    return render_template("editp2.html", subst_id=id, classmoas=classmoas, indications=allind, moaids=moaids, indids=indids)
+    return render_template("editp2.html", subst_id=id, classmoas=classmoas, indications=allind, moa_ids=moa_ids, ind_ids=ind_ids)
 
 @app.route("/editlts/<int:subst_id>", methods=["POST"])
 def editlts(subst_id):
