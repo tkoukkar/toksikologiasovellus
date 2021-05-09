@@ -1,5 +1,44 @@
 # Toksikologiasovellus
 
+### Lopullinen versio
+
+Sovellus sijaitsee osoitteessa https://toksikologiasovellus.herokuapp.com/.
+
+* Aloitusnäkymä:
+    * Jos käyttäjä ei ole kirjautunut sisään, aloitusnäkymässä näkyy kentät käyttäjätunnukselle ja salasanalle sekä *Kirjaudu sisään* -nappi. Mikäli käyttäjä on aiemmin luonut itselleen käyttäjätilin, hän voi kirjautua sisään syöttämällä käyttäjätunnuksensa ja salasanansa niille varattuihin kenttiin sekä klikkaamlla tämän jälkeen *Kirjaudu sisään* -nappia.
+    * Jos käyttäjällä ei ole käyttäjätiliä tai hän haluaa muusta syystä luoda itselleen uuden tilin, tämä onnistuu klikkaamalla linkkiä *Luo uusi käyttäjätili*.
+    * Kun käyttäjä on kirjautunut sisään, aloitusnäkymässä näkyy lista tietokannassa olevista aineista sekä linkki *Kirjaudu ulos*, jonka klikkaaminen nimensä mukaisesti kirjaa käyttäjän ulos, jolloin näkymä palautuu ei-kirjautuneen käyttäjän mukaiseksi.
+    * Jos sisään kirjautunut käyttäjä on ylläpitäjä, hän näkee edellämainittujen lisäksi linkit *Lisää uusi aine*, *Lisää yhteisvaikutus* sekä *Hallinnoi käyttäjiä*.
+
+* Ainekohtainen tietonäkymä:
+    * Kun käyttäjä on kirjautunut sisään, aloitusnäkymässä näkyy lista tietokannassa olevista aineista. Kukin aine toimii linkkinä, jonka klikkaaminen avaa kyseisen aineen tiedot.
+    * Tietonäkymästä pääsee takaisin aloitusnäkymään klikkaamalla linkkiä *Takaisin*.
+    * Jos käyttäjä on kirjautunut ylläpitäjänä, näkyy tietonäkymässä lisäksi linkit *Muokkaa aineen tietoja* sekä *Poista aine*. Näistä ensin mainittu vie aineen muokkausnäkymään; jälkimmäinen poistaa aineen, jolloin se ei enää näy aloitusnäkymän listauksessa eikä sitä löydä haulla.
+
+* Uuden käyttäjätilin luonti:
+    * Uuden käyttäjätilin luontinäkymään pääsee klikkaamalla aloitusnäkymässä olevaa linkkiä *Luo uusi käyttäjätili*.
+    * Käyttäjä voi syöttää haluamansa käyttäjänimen sekä salasanan niille varattuihin kenttiin.
+    * Kun käyttäjä on syöttänyt haluamansa käyttäjänimen ja salasanan sekä valinnut käyttäjäroolin, hän voi luoda uuden tilin klikkaamalla nappia *Luo tili*. Sovellus kirjaa käyttäjän automaattisesti sisään uudella tilillä ja palaa aloitusnäkymään.
+    * Linkki *Peruuta* palauttaa käyttäjän aloitusnäkymään luomatta uutta tiliä.
+
+* Käyttäjien hallinnointi:
+    * Kun käyttäjä on kirjautunut sisään ylläpitäjänä, hän pääsee aloitusnäkymästä käyttäjien hallinnointinäkymään klikkaamalla linkkiä *Hallinnoi käyttäjiä*.
+    * Hallinnointinäkymässä näkyvät listattuna kaikki käyttäjät. Mikäli käyttäjän rooli on tavallinen käyttäjä, näkyy käyttäjänimen oikealla puolella linkit *Muuta ylläpitäjäksi* sekä *Poista*. Näistä ensin mainittu antaa käyttäjälle ylläpitäjän oikeudet, jälkimmäinen puolestaan poistaa käyttäjän tietokannasta.
+
+* Uuden aineen lisääminen:
+    * Kun käyttäjä on kirjautunut sisään ylläpitäjänä, hän pääsee aloitusnäkymästä uuden aineen luontinäkymään klikkaamalla linkkiä *Lisää uusi aine*.
+    * Uuden aineen luontinäkymässä on kentät, joihin ylläpitäjä voi syöttää aineen nimen, metaboloitumisreitin, vaikutusajan, mahdolliset muut huomiot sekä mahdolliset haittavaikutukset. Kun halutut tiedot on syötetty niille varattuihin kenttiin, pääsee linkistä *Seuraava* luontinäkymän toiselle sivulle, jossa valitaan aineen indikaatiot sekä vaikutusmekanismit. Lopuksi aine tallennetaan painamalla nappia *Tallenna*.
+    * Ensimmäisellä sivulla olea linkki *Peruuta* palauttaa käyttäjän aloitusnäkymään lisäämättä uutta ainetta tietokantaan. Toisella sivulla oleva linkki *Takaisin* puolestaan palauttaa käyttäjän ensimmäiselle sivulle.
+
+* Aineen tietojen muokkaaminen:
+    * Kun käyttäjä on kirjautunut sisään ylläpitäjänä, hän pääsee aineen tietonäkymästä muokkausnäkymään klikkaamalla linkkiä *Muokkaa aineen tietoja*.
+    * Muokkausnäkymä toimii samoin kuin aineen luontinäkymä, paitsi että aiemmin syötetyt tiedot näkyvät valmiina (mikä ei kuitenkaan estä niiden muokkaamista)
+
+* Uuden yhteisvaikutuksen lisääminen:
+    * Kun käyttäjä on kirjautunut sisään ylläpitäjänä, hän pääsee aloitusnäkymästä uuden yhteisvaikutuksen luontinäkymään klikkaamalla linkkiä *Lisää yhteisvaikutus*.
+    * Yhteisvaikutuksen luontinäkymässä ylläpitäjä näkee kutakin ainetta vastaavan valintaruudun. Yhteisvaikutus luodaan valitsemalla siihen kuuluvat aineet sekä kirjoittamalla yhteisvaikutuksen kuvaus sille varattuun tekstikenttään ja tämän jälkeen klikkaamalla nappia *Lisää yhteisvaikutus*.
+    * Linkki *Peruuta* palauttaa käyttäjän aloitusnäkymään lisäämättä uutta yhteisvaikutusta tietokantaan.
+
 ### Välipalautus 3
 
 **Sovelluksen nykyinen tilanne**:
