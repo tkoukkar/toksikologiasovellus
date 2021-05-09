@@ -151,7 +151,7 @@ def addsubst():
     notes = request.form["notes"]
     risks = request.form["risks"]
 
-    subst_id = substs.add(class_id, name, metabolism, eff_duration, notes, risks)
+    subst_id = substs.add(class_id, name.lower(), metabolism.lower(), eff_duration, notes, risks)
 
     moas = substs.classmoas(class_id)
     indications = substs.indlist()
@@ -195,7 +195,7 @@ def update(id):
     risks = request.form["risks"]
     creating = strtobool(request.form["new"])
 
-    substs.update(id, class_id, name, metabolism, eff_duration, notes, risks)
+    substs.update(id, class_id, name.lower(), metabolism.lower(), eff_duration, notes, risks)
 
     classmoas = substs.classmoas(class_id)
     allind = substs.indlist()

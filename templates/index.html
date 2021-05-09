@@ -1,5 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+<body>
+
 {% if session.username %}
-<p>Olet kirjautunut: {{ session.username }}, {{ session.userrole }}</p>
+<p>Olet kirjautunut: {{ session.username }}</p>
 <p><a href="/logout">Kirjaudu ulos</a></p>
 
 <hr>
@@ -41,3 +48,5 @@
 </form>
 
 {% endif %}
+</body>
+</html>
