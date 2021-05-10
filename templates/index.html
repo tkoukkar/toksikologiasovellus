@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="./style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
 </head>
 <body>
 
 {% if session.username %}
+<p><h1>Toksikologiasovellus</h1></p>
 <p>Olet kirjautunut: {{ session.username }}</p>
 <p><a href="/logout">Kirjaudu ulos</a></p>
 
